@@ -13,7 +13,6 @@ export const createProperty = (req, res) => {
     front,
     back,
     description,
-    media,
     soldout,
     soldByUs,
     buyerName,
@@ -23,6 +22,17 @@ export const createProperty = (req, res) => {
     soldAt,
     status,
   } = req.body;
+
+  const files = req.files || [];
+
+  const media = files.map((file) => {
+    const type = file.mimetype.startsWith("image")
+      ? "image"
+      : file.mimetype.startsWith("video")
+      ? "video"
+      : "other";
+    return { type, src: file.filename };
+  });
 
   const query = `
     INSERT INTO properties (
@@ -59,6 +69,8 @@ export const createProperty = (req, res) => {
     res.status(201).json({ message: "Property created", id: result.insertId });
   });
 };
+
+
 
 // Get All Properties
 export const getAllProperties = (req, res) => {

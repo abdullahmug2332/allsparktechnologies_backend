@@ -1,15 +1,13 @@
 import dotenv from "dotenv";
 dotenv.config();
-
-import express from 'express';
 import db from './db.js';
 import cors from 'cors';
 import authRoutes from "./Routes/authRoutes.js"
-
 import propertyRoutes from "./Routes/propertyRoutes.js"; 
+import express from "express";
+import path from "path";
 const app = express();
-
-app.use("/images", express.static("images"));
+app.use("/images", express.static("images")); // serve static files
 
 const PORT = process.env.PORT ;
 
