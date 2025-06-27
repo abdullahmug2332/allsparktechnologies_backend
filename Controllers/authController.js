@@ -1,7 +1,9 @@
 import db from "../db.js";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
-const JWT_SECRET = "allsparktechnologies";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const login = (req, res) => {
   const { email, password } = req.body;

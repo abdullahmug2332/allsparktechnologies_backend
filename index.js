@@ -1,33 +1,27 @@
-// index.js
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from 'express';
 import db from './db.js';
 import cors from 'cors';
-import homePage from "./Routes/homePageRoutes.js";
-import aboutPage from "./Routes/aboutPageRoutes.js";
-import servicePage from "./Routes/servicePageRoutes.js";
-import contactPage from "./Routes/contactPageRoutes.js";
-import auth from "./Routes/authRoutes.js";
-import blogPageRoutes from "./Routes/blogPageRoutes.js";
+import authRoutes from "./Routes/authRoutes.js"
 
+import propertyRoutes from "./Routes/propertyRoutes.js"; 
 const app = express();
 
 app.use("/images", express.static("images"));
 
-const PORT = 5000;
+const PORT = process.env.PORT ;
 
-// Middleware
+
 app.use(express.json());
 app.use(cors());
 
-// Routes
-app.use("/", homePage);
-app.use("/", aboutPage);
-app.use("/", servicePage);
-app.use("/", contactPage);
-app.use("/", blogPageRoutes);
-app.use("/", auth);
+app.use("/",authRoutes)
+app.use("/", propertyRoutes);
 
-// Start server
+
+
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
 });
