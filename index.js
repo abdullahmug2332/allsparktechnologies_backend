@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 // index.js
 import express from 'express';
 import db from './db.js';
@@ -13,7 +15,7 @@ const app = express();
 
 app.use("/images", express.static("images"));
 
-const PORT = 5000;
+const PORT = process.env.PORT ;
 
 // Middleware
 app.use(express.json());
