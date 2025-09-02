@@ -12,6 +12,7 @@ import auth from "./Routes/authRoutes.js";
 import blogPageRoutes from "./Routes/blogPageRoutes.js";
 import blogRoutes from "./Routes/blogRoutes.js";
 import contactRoutes from "./Routes/contactFormRoute.js";
+import subservices from "./Routes/subServicesRoutes.js";
 const app = express();
 
 
@@ -31,6 +32,7 @@ app.use("/", contactPage);
 app.use("/", blogPageRoutes);
 app.use("/", auth);
 app.use("/", blogRoutes);
+app.use("/", subservices);
 app.use("/", contactRoutes); // ✅ Already present in your code
 
 // app.post('/api/contact', async (req, res) => {
