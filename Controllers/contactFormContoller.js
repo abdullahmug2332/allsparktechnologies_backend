@@ -32,3 +32,40 @@ export const submitContactForm = (req, res) => {
     });
   });
 };
+
+// ✅ Get all contact form data
+export const getAllContacts = (req, res) => {
+  const sql = "SELECT * FROM contacts ORDER BY id DESC"; 
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).json({ error: "Database error." });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: results,
+    });
+  });
+};
+
+// ✅ Get a single contact by ID
+export const getContactById = (req, res) => {
+  const { id } = req.params;
+
+  const sql = "SELECT * FROM contacts WHERE id = ?";
+
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).json({ error: "Database error." });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Contact not found." });
+    }
+
+    return res.status(200).json(results[0]);
+  });
+};

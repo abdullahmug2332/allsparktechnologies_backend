@@ -38,7 +38,7 @@ export const putServicePageByName = async (req, res) => {
 
   const query = "UPDATE servicespages SET json = ? WHERE name = ?";
 
-  db.query(query, [stringifiedJson, name], (err, results) => { 
+  db.query(query, [stringifiedJson, name], (err, results) => {
     if (err) {
       console.error("Error updating service page:", err);
       return res.status(500).json({ error: "Database update failed" });
@@ -77,9 +77,21 @@ export const uploadServiceImage = (req, res) => {
     try {
       const keys = imageKey.replace(/\[(\w+)\]/g, '.$1').split('.');
       let ref = jsonData;
+      // for (let i = 0; i < keys.length - 1; i++) {
+      //   if (!ref[keys[i]]) return res.status(400).json({ error: `Invalid path: ${imageKey}` });
+      //   ref = ref[keys[i]];
+      // }
       for (let i = 0; i < keys.length - 1; i++) {
-        if (!ref[keys[i]]) return res.status(400).json({ error: `Invalid path: ${imageKey}` });
-        ref = ref[keys[i]];
+        const key = keys[i];
+        if (ref[key] === undefined) {
+          // If next key is a number, make an array
+          if (!isNaN(keys[i + 1])) {
+            ref[key] = [];
+          } else {
+            ref[key] = {};
+          }
+        }
+        ref = ref[key];
       }
       ref[keys[keys.length - 1]] = imagePath;
     } catch (err) {
