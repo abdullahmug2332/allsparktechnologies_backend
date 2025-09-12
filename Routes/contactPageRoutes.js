@@ -5,7 +5,7 @@ import {
   contactData,
   updateContactData,
   uploadContactImage,
-} from "../controllers/contactPageController.js";
+} from "../Controllers/contactPageController.js";
 
 const router = express.Router(); 
 
