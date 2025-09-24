@@ -70,7 +70,6 @@ export const getSubserviceBySlug = (req, res) => {
   });
 };
 
-
 // Update a subservice
 export const updateSubservice = (req, res) => {
   const { id, slug, service, json } = req.body;
@@ -96,5 +95,22 @@ export const updateSubservice = (req, res) => {
     }
 
     res.json({ message: "Subservice updated successfully" });
+  });
+};
+
+// Get all subservice slugs
+export const getAllSubserviceSlugs = (req, res) => {
+  const query = "SELECT slug FROM subservices";
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error fetching subservice slugs:", err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    // Map results into an array of slugs
+    const slugs = results.map(row => row.slug);
+
+    res.json(slugs);
   });
 };
